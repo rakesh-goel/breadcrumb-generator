@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Contextual Nav Widget</title>
+  <link rel="stylesheet" href="widget.css" />
+</head>
+<body>
+  <div id="gsi-context-nav" class="gsi-context-nav" aria-label="Contextual navigation">
+    <button id="gsi-cn-toggle" class="gsi-cn-toggle" aria-expanded="false" aria-controls="gsi-cn-panel">
+      <span class="gsi-cn-toggle-label">Navigate</span>
+      <span class="gsi-cn-chevron" aria-hidden="true">▴</span>
+    </button>
+
+    <section id="gsi-cn-panel" class="gsi-cn-panel" role="dialog" aria-modal="false" aria-label="Navigation panel">
+      <div class="gsi-cn-section">
+        <div class="gsi-cn-section-title">You are here</div>
+        <nav id="gsi-cn-breadcrumbs" class="gsi-cn-crumbs" aria-label="Breadcrumb"></nav>
+      </div>
+
+      <div class="gsi-cn-section">
+        <div class="gsi-cn-section-title">Related pages</div>
+        <ul id="gsi-cn-related" class="gsi-cn-list" aria-label="Related pages"></ul>
+        <button id="gsi-cn-more" class="gsi-cn-more" hidden>Show more</button>
+      </div>
+
+      <div class="gsi-cn-section">
+        <div class="gsi-cn-section-title">Top sections</div>
+        <div id="gsi-cn-top" class="gsi-cn-top-grid" aria-label="Top sections"></div>
+      </div>
+    </section>
+  </div>
+
+  <script src="widget.js" defer></script>
+</body>
+</html>
