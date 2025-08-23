@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>India.co.in page nevigator</title>
+  <title>Breadcrumb Navigation</title>
   <style>
     #breadcrumb {
       font-family: Arial, sans-serif;
@@ -23,11 +22,6 @@
   <div id="breadcrumb">...</div>
 
   <script>
-    function getQueryParam(param) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(param);
-    }
-
     function generateBreadcrumbsFromPath(pathURL) {
       try {
         const url = new URL(pathURL);
@@ -51,9 +45,9 @@
       }
     }
 
-    const path = getQueryParam("path");
-    if (path) generateBreadcrumbsFromPath(path);
-    else document.getElementById("breadcrumb").innerText = "No path provided";
+    // Try to get parent page URL if inside iframe
+    let parentURL = document.referrer || window.location.href;
+    generateBreadcrumbsFromPath(parentURL);
   </script>
 </body>
 </html>
