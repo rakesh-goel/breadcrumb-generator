@@ -1,53 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Breadcrumb Navigation</title>
-  <style>
-    #breadcrumb {
-      font-family: Arial, sans-serif;
-      font-size: 14px;
-      margin: 10px 0;
+<script>
+  window.addEventListener("message", function (event) {
+    if (event.data && event.data.path) {
+      generateBreadcrumbsFromPath(event.data.path);
     }
-    #breadcrumb a {
-      text-decoration: none;
-      color: #1a73e8;
+  });
+
+  function generateBreadcrumbsFromPath(pathURL) {
+    try {
+      const url = new URL(pathURL);
+      const segments = url.pathname.split('/').filter(Boolean);
+      let breadcrumbHTML = `<a href="${url.origin}">Home</a>`;
+      let currentPath = url.origin;
+
+      segments.forEach((segment, index) => {
+        currentPath += `/${segment}`;
+        const label = decodeURIComponent(segment.replace(/-/g, ' '));
+        if (index === segments.length - 1) {
+          breadcrumbHTML += ` &gt; <span>${label}</span>`;
+        } else {
+          breadcrumbHTML += ` &gt; <a href="${currentPath}">${label}</a>`;
+        }
+      });
+
+      document.getElementById("breadcrumb").innerHTML = breadcrumbHTML;
+    } catch (e) {
+      document.getElementById("breadcrumb").innerText = "Breadcrumbs unavailable";
     }
-    #breadcrumb span {
-      color: #333;
-    }
-  </style>
-</head>
-<body>
-  <div id="breadcrumb">...</div>
-
-  <script>
-    function generateBreadcrumbsFromPath(pathURL) {
-      try {
-        const url = new URL(pathURL);
-        const segments = url.pathname.split('/').filter(Boolean);
-        let breadcrumbHTML = `<a href="${url.origin}">Home</a>`;
-        let currentPath = url.origin;
-
-        segments.forEach((segment, index) => {
-          currentPath += `/${segment}`;
-          const label = decodeURIComponent(segment.replace(/-/g, ' '));
-          if (index === segments.length - 1) {
-            breadcrumbHTML += ` &gt; <span>${label}</span>`;
-          } else {
-            breadcrumbHTML += ` &gt; <a href="${currentPath}">${label}</a>`;
-          }
-        });
-
-        document.getElementById("breadcrumb").innerHTML = breadcrumbHTML;
-      } catch (e) {
-        document.getElementById("breadcrumb").innerText = "Breadcrumbs unavailable";
-      }
-    }
-
-    // Try to get parent page URL if inside iframe
-    let parentURL = document.referrer || window.location.href;
-    generateBreadcrumbsFromPath(parentURL);
-  </script>
-</body>
-</html>
+  }
+</script>
