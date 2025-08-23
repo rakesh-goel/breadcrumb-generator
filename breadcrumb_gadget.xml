@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+  <ModulePrefs title="Breadcrumb Generator" height="50">
+    <Require feature="dynamic-height"/>
+  </ModulePrefs>
+  <Content type="html">
+    <![CDATA[
+      <div id="breadcrumb-container" style="width:100%; height:50px;">
+        <iframe id="breadcrumb-frame" src="https://rakeshgoel.github.io/breadcrumb/breadcrumb_generator.html" width="100%" height="50" frameborder="0" scrolling="no"></iframe>
+      </div>
+      <script type="text/javascript">
+        window.addEventListener("load", function () {
+          var iframe = document.getElementById("breadcrumb-frame");
+          if (iframe && window.location.href) {
+            iframe.contentWindow.postMessage({ path: window.location.href }, "*");
+          }
+        });
+      </script>
+    ]]>
+  </Content>
+</Module>
