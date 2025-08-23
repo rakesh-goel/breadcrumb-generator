@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>India.co.in page nevigator</title>
+  <style>
+    #breadcrumb {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      margin: 10px 0;
+    }
+    #breadcrumb a {
+      text-decoration: none;
+      color: #1a73e8;
+    }
+    #breadcrumb span {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div id="breadcrumb">...</div>
+
+  <script>
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    function generateBreadcrumbsFromPath(pathURL) {
+      try {
+        const url = new URL(pathURL);
+        const segments = url.pathname.split('/').filter(Boolean);
+        let breadcrumbHTML = `<a href="${url.origin}">Home</a>`;
+        let currentPath = url.origin;
+
+        segments.forEach((segment, index) => {
+          currentPath += `/${segment}`;
+          const label = decodeURIComponent(segment.replace(/-/g, ' '));
+          if (index === segments.length - 1) {
+            breadcrumbHTML += ` &gt; <span>${label}</span>`;
+          } else {
+            breadcrumbHTML += ` &gt; <a href="${currentPath}">${label}</a>`;
+          }
+        });
+
+        document.getElementById("breadcrumb").innerHTML = breadcrumbHTML;
+      } catch (e) {
+        document.getElementById("breadcrumb").innerText = "Breadcrumbs unavailable";
+      }
+    }
+
+    const path = getQueryParam("path");
+    if (path) generateBreadcrumbsFromPath(path);
+    else document.getElementById("breadcrumb").innerText = "No path provided";
+  </script>
+</body>
+</html>
